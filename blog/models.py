@@ -6,7 +6,7 @@ from django.utils import timezone
 class Post(models.Model):
     titulo = models.CharField(max_length = 250)
     contenido = RichTextUploadingField(blank=True, null=True)
-    imagen = models.ImageField(null=True, blank=True, upload_to = 'posts', default = 'postsPorDefecto.png')
+    imagen = models.ImageField(upload_to = 'posts', default = 'postsPorDefecto.png')
     autor = models.ForeignKey(User, on_delete = models.CASCADE)
     fecha = models.DateTimeField(default=timezone.now)
 
