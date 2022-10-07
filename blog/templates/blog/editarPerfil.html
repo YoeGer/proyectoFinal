@@ -1,0 +1,16 @@
+{% extends 'blog/base.html' %}
+
+{% load static %}
+
+{% block contenido_que_cambia %}
+<h1>Editar perfil de {{ usuario }}</h1>
+<h2>FORMULARIO DE EDICION</h2>
+<h3>{{ mensaje }}</h3>
+<form action="{% url 'editarPerfil' %}" method="POST"> {% csrf_token %}
+    <table>
+        {{ formulario.as_table }}
+    </table>
+    <input type="submit" value='Guardar'>
+</form>
+<h2>{{ mensaje }}</h2>
+{% endblock %}

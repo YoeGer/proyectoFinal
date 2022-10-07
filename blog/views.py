@@ -4,6 +4,7 @@ from .models import *
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
+from blog.forms import UserEditForm
 
 def inicio(request):
     posts = Post.objects.all()
@@ -93,3 +94,24 @@ def register(request):
     else: 
         form = UserRegisterForm()
         return render (request, "blog/register.html", {'formulario': form})
+
+@login_required
+def editarPerfil(request): 
+    usuario = request.user
+    if request.method == 'POST':
+        form = UserEditForm(request.POST)
+        if form.is_valid():
+            info = form.cleaned_data
+            usuario.email = info ["email"]
+            usuario.password1 = info ["password1"]
+            usuario.password2 = info ["password2"]
+            usuario.first_name = info ["first_name"]
+            usuario.last_name = info ["last_name"]
+            usuario.save()
+            return render (request, "blog/inicio.html", {'mensaje':'Perfil editado correctamente'})
+        else: 
+            return render (request, "blog/editarPerfil.html", {'formulario': form, 'usuario':usuario, 'mensaje':'FORMULARIO INVALIDO'})
+    else: 
+        form = UserEditForm(instance=usuario)
+    return render (request, "blog/editarPerfil.html", {'formulario':form, 'usuario':usuario})
+
