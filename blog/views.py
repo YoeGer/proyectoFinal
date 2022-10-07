@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from blog.forms import *
 from .models import *
-
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login, logout, authenticate
 
 def inicio(request):
     posts = Post.objects.all()
@@ -55,4 +56,22 @@ def editarPost(request, id):
 def postDetalle(request, id):
     post = Post.objects.get(id=id)
     return render (request, "blog/postDetalle.html", {'post':post})
+
+def login(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data = request.POST)
+        if form.is_valid():
+            usu = request.POST["username"]
+            clave = request.POST["password"]
+            usuario = authenticate(username=usu,password=clave)
+            if usuario is not None:
+                login(request,usurio)
+                return render(request, "blog/inicio.html", {'mensaje':f'Bienvenido {usuario}'})
+            else: 
+                return render(request, "blog/login.html", {'formulario': form, 'mensaje':'Usuario o clave incorrecto'})
+        else: 
+            return render (request, "blog/login.html", {'formulario': form, 'mensaje':"Usuario o clave incorrecto"})
+    else: 
+        form = AuthenticationForm()
+        return render (request, "blog/login.html", {'formulario':form})
     
