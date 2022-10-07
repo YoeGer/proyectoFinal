@@ -12,16 +12,16 @@
     </ul>
 </div>
 {% endblock %}
+
+
 {% block contenido_que_cambia %}
-    {% if posts %}
-        <ul>
-            {% for post in posts %}
-                <a href="{% url 'postDetalle' post.id %}"><h4>{{ post.titulo }} | {{ post.autor }}</h4></a>
-                <a class = "btn btn-sucess" href="{% url 'eliminarPost' post.id %}">ELIMINAR</a>
-                <a class = "btn btn-sucess" href="{% url 'editarPost' post.id %}">EDITAR</a>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No se encontraron articulos...</p>
-    {% endif %}
+<a href="{% url 'postDetalle' post.id %}">
+<h1>{{ post.titulo }}</h1>
+<p>{{ post.contenido }}</p>
+{% if post.imagen %}
+    <img height = '450px' src="{{ post.imagen.url }}">
+{% endif %}
+
+<h6>{{ post.fecha }} | {{ post.autor }}</h6>
+</a>
 {% endblock %}

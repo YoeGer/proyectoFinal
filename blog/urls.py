@@ -8,4 +8,5 @@ urlpatterns = [
     path('leerPosts/', leerPosts, name='leerPosts'), 
     path('eliminarPost/<id>', eliminarPost, name='eliminarPost'), 
     path('editarPost/<id>', editarPost, name='editarPost'),
+    path('postDetalle/<id>', postDetalle, name='postDetalle'),
 ]

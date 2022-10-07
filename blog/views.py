@@ -4,11 +4,12 @@ from .models import *
 
 
 def inicio(request):
-    return render(request, 'blog/inicio.html')
+    posts = Post.objects.all()
+    return render(request, 'blog/inicio.html', {'posts': posts})
 
 def postFormulario(request):
     if request.method == "POST":
-        form = PostForm(request.POST)
+        form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             informacion = form.cleaned_data
             titulo = informacion["titulo"]
@@ -50,3 +51,8 @@ def editarPost(request, id):
     else: 
         form = PostForm(initial={"titulo":post.titulo, "contenido":post.contenido, "imagen":post.imagen, "autor":post.autor, "fecha":post.fecha})
         return render (request, "blog/editarPost.html", {"formulario":form, "post":post})
+
+def postDetalle(request, id):
+    post = Post.objects.get(id=id)
+    return render (request, "blog/postDetalle.html", {'post':post})
+    
