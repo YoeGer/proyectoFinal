@@ -1,0 +1,15 @@
+{% extends 'blog/base.html' %}
+
+{% load static %}
+
+{% block contenido_que_cambia %}
+<h1>REGISTRARSE</h1>
+<form action="{% url 'register' %}" method="POST"> {% csrf_token %}
+    <table>
+        {{ formulario.as_table }}
+
+    </table>
+    <button type="submit">Registrarse</button>
+</form>
+<h2>{{ mensaje }}</h2>
+{% endblock %}

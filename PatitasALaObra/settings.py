@@ -127,3 +127,5 @@ CKEDITOR_CONFIGS = {
   'toolbar':'full',
     },  
 }
+
+LOGIN_URL = '/blog/login/'

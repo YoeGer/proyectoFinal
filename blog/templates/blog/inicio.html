@@ -2,16 +2,6 @@
 
 {% load static %}
 
-{% block menu_que_cambia %}
-<div class="collapse navbar-collapse" id="navbarResponsive">
-    <ul class="navbar-nav ms-auto py-4 py-lg-0">
-        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="about.html">Acerca de</a></li>
-        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'login' %}">Iniciar sesion</a></li>
-        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'post' %}">Redactar articulo</a></li>
-        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'leerPosts' %}">Ver lista de articulos</a></li>
-    </ul>
-</div>
-{% endblock %}
 {% block encabezado_que_cambia %}
 <header class="masthead" style="background-image: url('assets/img/home-bg.jpg')">
     <div class="container position-relative px-4 px-lg-5">

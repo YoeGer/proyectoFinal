@@ -28,9 +28,15 @@
                 {% block menu_que_cambia %}
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto py-4 py-lg-0">
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="about.html">Acerca de mi</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="post.html">Posts</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="contact.html">Contactanos</a></li>
+                        <li><a class="btn btn-primary" href="about.html">Acerca de</a></li>
+                        <li><a class="btn btn-primary" href="{% url 'post' %}">Redactar articulo</a></li>
+                        <li><a class="btn btn-primary" href="{% url 'leerPosts' %}">Ver lista de articulos</a></li>
+                        {% if user.is_authenticated %}
+                        <li><a class="btn btn-primary" href="{% url 'logout' %}">Cerrar Sesion</a>
+                        {% else %}
+                        <li><a class="btn btn-primary" href="{% url 'login' %}">Iniciar sesion</a></li>
+                        <li><a class="btn btn-primary" href="{% url 'register' %}">Registrarse</a></li>
+                        {% endif %}
                     </ul>
                 </div>
                 {% endblock %}
