@@ -14,4 +14,4 @@ class Post(models.Model):
         ordering = ('-fecha',)
 
     def __str__(self):
-        return self.titulo + ' | ' + str(self.autor)
+        return str(self.titulo) + ' | ' + str(self.autor)

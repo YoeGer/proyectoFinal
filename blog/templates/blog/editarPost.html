@@ -1,0 +1,15 @@
+{% extends 'blog/base.html' %}
+
+{% load static %}
+
+{% block contenido_que_cambia %}
+<h1 class = "mb-5">EDITANDO ARTICULO: {{ post.titulo }}</h1>
+<form action="{% url 'editarPost' post.id %}" method="POST" endtype="multipart/form-data"> {% csrf_token %}
+    <table>
+        {{ formulario.as_table }}
+        {{ formulario.media }}
+        {{ form.as_p|safe }}
+    </table>
+    <input type="submit" value="Guardar">
+</form>
+{% endblock %}

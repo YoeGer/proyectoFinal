@@ -1,0 +1,27 @@
+{% extends 'blog/base.html' %}
+
+{% load static %}
+
+{% block menu_que_cambia %}
+<div class="collapse navbar-collapse" id="navbarResponsive">
+    <ul class="navbar-nav ms-auto py-4 py-lg-0">
+        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="about.html">Acerca de</a></li>
+        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="post.html">Articulos</a></li>
+        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'post' %}">Redactar articulo</a></li>
+        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="contact.html">Contactanos</a></li>
+    </ul>
+</div>
+{% endblock %}
+{% block contenido_que_cambia %}
+    {% if posts %}
+        <ul>
+            {% for post in posts %}
+                <h4>{{ post.titulo }}, {{ post.autor }}</h4>
+                <a class = "btn btn-sucess" href="{% url 'eliminarPost' post.id %}">ELIMINAR</a>
+                <a class = "btn btn-sucess" href="{% url 'editarPost' post.id %}">EDITAR</a>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No se encontraron articulos...</p>
+    {% endif %}
+{% endblock %}
