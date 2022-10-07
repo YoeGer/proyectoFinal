@@ -16,4 +16,13 @@ class Post(models.Model):
     def __str__(self):
         return str(self.titulo) + ' | ' + str(self.autor)
 
+class Avatar(models.Model):
+    user = models.ForeignKey(User, on_delete = models.CASCADE)
+    imagen = models.ImageField(upload_to = 'avatares')
+
+    def __str__(self):
+        return "Avatar de " + str(self.user)
+
+
+
  

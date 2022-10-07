@@ -12,5 +12,8 @@
     </table>
     <input type="submit" value='Guardar'>
 </form>
+<h1>Desea agregar a cambiar su avatar?</h1>
+<a class="btn btn-primary" href="{% url 'agregarAvatar' %}">Modificar Avatar</a> 
+<a class="btn btn-primary" href="{% url 'inicio' %}">Volver a inicio</a>
 <h2>{{ mensaje }}</h2>
 {% endblock %}

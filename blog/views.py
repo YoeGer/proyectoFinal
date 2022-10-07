@@ -6,9 +6,11 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from blog.forms import UserEditForm
 
+@login_required
 def inicio(request):
     posts = Post.objects.all()
-    return render(request, 'blog/inicio.html', {'posts': posts})
+    avatares = Avatar.objects.filter(user=request.user.id)  
+    return render(request, 'blog/inicio.html', {'posts': posts, 'url': avatares[0].imagen.url})
 
 @login_required
 def postFormulario(request):
@@ -108,10 +110,34 @@ def editarPerfil(request):
             usuario.first_name = info ["first_name"]
             usuario.last_name = info ["last_name"]
             usuario.save()
-            return render (request, "blog/inicio.html", {'mensaje':'Perfil editado correctamente'})
+            return render (request, "blog/editarPerfil.html", {'mensaje':'Perfil editado correctamente'})
         else: 
             return render (request, "blog/editarPerfil.html", {'formulario': form, 'usuario':usuario, 'mensaje':'FORMULARIO INVALIDO'})
     else: 
         form = UserEditForm(instance=usuario)
     return render (request, "blog/editarPerfil.html", {'formulario':form, 'usuario':usuario})
 
+
+
+@login_required
+def agregarAvatar(request): 
+    if request.method == "POST": 
+        formulario = AvatarForm(request.POST, request.FILES)
+        if formulario.is_valid():
+            avatarViejo = Avatar.objects.filter(user=request.user)
+            if (len(avatarViejo)>0):
+                avatarViejo[0].delete()
+            avatar = Avatar(user=request.user, imagen=formulario.cleaned_data['imagen'])
+            avatar.save()
+            return render(request, "blog/inicio.html", {'usuario':request.user, 'mensaje': 'Avatar agregado correctamente', 'imagen': avatar.imagen.url})
+    else: 
+        formulario = AvatarForm()
+        return render (request, "blog/agregarAvatar.html", {'formulario':formulario, 'usuario': request.user})
+
+    def obtenerAvatar(request): 
+        lista = Avatar.objects.filter(user=request.user)
+        if len(lista)!=0:
+            imagen = lista[0].imagen.url
+        else: 
+            imagen = "avatarPorDefecto"
+        return imagen

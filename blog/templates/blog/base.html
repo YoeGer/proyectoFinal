@@ -32,6 +32,8 @@
                         <li><a class="btn btn-primary" href="{% url 'post' %}">Redactar articulo</a></li>
                         <li><a class="btn btn-primary" href="{% url 'leerPosts' %}">Ver lista de articulos</a></li>
                         {% if user.is_authenticated %}
+                        <img height="100px" src="{{ url }}" alt="">
+                        <p class="text-muted small mb-4 mb-lg-0">Hola {{ user.username }}!!</p>
                         <li><a class="btn btn-primary" href="{% url 'logout' %}">Cerrar Sesion</a>
                         <li><a class="btn btn-primary" href="{% url 'editarPerfil' %}">Editar perfil</a>
                         {% else %}

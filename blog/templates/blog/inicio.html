@@ -19,12 +19,15 @@
 {% endblock %}
 
 {% block contenido_que_cambia %}
+<img src="{{ avatar }}" alt="">
+
 {% for post in posts %}
 <a href="{% url 'inicio' %}">
     {{ post.titulo }}
     {{ post.contenido|truncatechars:50 }}
     <a class = "btn btn-sucess" href="{% url 'postDetalle' post.id %}">Leer mas</a>
     {{ post.fecha }} | {{ post.autor }}
+    
 </a>
 {% endfor %}
 {% endblock %}
