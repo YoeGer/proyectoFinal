@@ -1,18 +1,59 @@
 {% extends 'blog/base.html' %}
 
 {% load static %}
+{% block encabezado_que_cambia %}
+<body>
+    
 
-
+    <header class="header">
+        <nav class="nav">
+            {% if user.is_authenticated %}
+                <img height="75px" src="{{ avatar }}" class= "img nav-link" alt="" >
+                <nav class="navbar navbar-light bg-light static-top">
+                    <div class="container">
+                       
+                    <a class = "btn btn-sucess" href="{% url 'sobreMi' %}">SOBRE MI</a>
+                    <a class = "btn btn-sucess" href="{% url 'post' %}">PUBLICAR</a>
+                   
+                    <a class = "btn btn-sucess" href="{% url 'editarPerfil' %}">EDITAR PERFIL</a>
+                    <a class = "btn btn-sucess" href="{% url 'logout' %}">CERRAR SESION</a>
+            {% else %}
+                    <a class = "btn btn-sucess" href="{% url 'login' %}">INICIAR SESION</a>
+                    <a class = "btn btn-sucess" href="{% url 'register' %}">REGISTRARSE</a>
+            {% endif %}
+                    </div>
+                </nav>
+        </nav>
+    </header>
+        <header class="masthead">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="site-heading">
+                            <h1>LISTA DE PUBLICACIONES</h1>
+                            <a class = "btn btn-sucess" href="{% url 'inicio' %}">VOLVER A INICIO</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </body>
+    {% endblock %}
 {% block contenido_que_cambia %}
     {% if posts %}
         <ul>
             {% for post in posts %}
-                <a href="{% url 'postDetalle' post.id %}"><h4>{{ post.titulo }} | {{ post.autor }}</h4></a>
+                <a href="{% url 'postDetalle' post.id %}"></a>
+                <h4>{{ post.titulo }} | {{ post.autor }}</h4>
+               <p>{{ post.contenido|safe|truncatechars:50 }}</p> 
+               <a class = "btn btn-sucess" href="{% url 'postDetalle' post.id %}">Leer mas</a>
+            {% if user.id == post.autor.id %}
                 <a class = "btn btn-sucess" href="{% url 'eliminarPost' post.id %}">ELIMINAR</a>
                 <a class = "btn btn-sucess" href="{% url 'editarPost' post.id %}">EDITAR</a>
+            {% endif %}
             {% endfor %}
         </ul>
     {% else %}
-        <p>No se encontraron articulos...</p>
+        <h2>No se encontraron articulos...</h2>
     {% endif %}
 {% endblock %}

@@ -1,14 +1,12 @@
 {% extends 'blog/base.html' %}
 {% load static %}
 {% block encabezado_que_cambia %}
-<body>
 <header class="header">
     <nav class="nav">
         {% if user.is_authenticated %}
             <img height="75px" src="{{ avatar }}" class= "img nav-link" alt="" >
             <nav class="navbar navbar-light bg-light static-top">
                 <div class="container">
-                <a class = "btn btn-sucess" href="{% url 'sobreMi' %}">SOBRE MI</a>
                 <a class = "btn btn-sucess" href="{% url 'post' %}">PUBLICAR</a>
                 <a class = "btn btn-sucess" href="{% url 'leerPosts' %}">PUBLICACIONES</a>
                 <a class = "btn btn-sucess" href="{% url 'editarPerfil' %}">EDITAR PERFIL</a>
@@ -21,39 +19,35 @@
             </nav>
     </nav>
 </header>
-    <header class="masthead" >
+    <header class="masthead">
         <div class="container position-relative px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-md-10 col-lg-8 col-xl-7"style="color: plum ;" >
-                    <div class="site-heading" >
-                        <h1>Patitas a la obra</h1>
-                        <span class="subheading">Un blog dedicado a nuestros mejores amigos</span>
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="site-heading">
+                        <h1>SOBRE MI</h1>
+                        <a class = "btn btn-sucess" href="{% url 'inicio' %}">VOLVER A INICIO</a>
                     </div>
                 </div>
             </div>
         </div>
     </header>
-    <h2>{{ mensaje }}</h2>
-{% endblock %}
-{% block contenido_que_cambia %}
-<a href="{% url 'inicio' %}" ></a>
-    {% for post in posts %}
-    <main class="mb-4">
-        
-       <div class="container px-4 px-lg-5">
-        <div class="row gx-4 gx-lg-5 justify-content-center">
-           <div class="col-md-10 col-lg-8 col-xl-7">
-              <!--<div class="post-preview"> -->
-                    <h2> {{ post.titulo }}</h2>
-                    <p>{{ post.contenido|safe|truncatechars:50 }}</p> 
-                    <!--<div class="container">-->
-                    <a class = "btn btn-sucess" href="{% url 'postDetalle' post.id %}">Leer mas</a>
-                    
-                    <h6>{{ post.fecha }} | {{ post.autor }}</h6>
-               </div>
-                    <hr class="my-4" />
-    </main>
-    {% endfor %}
+
 
 {% endblock %}
-</body>
+{% block contenido_que_cambia %}
+<main class="mb-4">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <h1>Hola! Soy Yoe :)</h1> 
+                <h3>Tengo 27 años, soy Lic. en Diagnostico por Imagenes y actualmente estoy estudiando Programacion en la UTN Facultad de San Francisco - Cordoba, donde vivo.  </h3>
+                <p>La idea de este proyecto esta inspirada en mis perros, mis amigos rescatados, los que siempre estan ahi acompompañando. </p>
+                </p>Este blog tendria la finalidad de formar una comunidad de gente que comparta el mismo amor por los animales y tratar de ayudar, sumando un granito de arena para que muchos de ellos puedan tener una mejor vida.</p>
+                <p>¿De que forma? Compartiendo busquedas de animales perdidos, compartiendo aquellos encontrados para buscar su dueño o encontrarles un hogar, fomentar campañas de esterilizacion, de adopcion, compartir propias historias. </p>
+            </div>
+        </div>
+    </div>
+</main>   
+{% endblock %}
+
+

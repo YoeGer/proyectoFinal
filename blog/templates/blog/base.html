@@ -16,57 +16,51 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{% static 'blog/css/styles.css' %}" rel="stylesheet" />
     </head>
+  
     <body>
-        <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
-            <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="index.html">Patitas a la obra</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                    Menu
-                    <i class="fas fa-bars"></i>
-                </button>
-                {% block menu_que_cambia %}
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ms-auto py-4 py-lg-0">
-                        <li><a class="btn btn-primary" href="about.html">Acerca de</a></li>
-                        <li><a class="btn btn-primary" href="{% url 'post' %}">Redactar articulo</a></li>
-                        <li><a class="btn btn-primary" href="{% url 'leerPosts' %}">Ver lista de articulos</a></li>
-                        {% if user.is_authenticated %}
-                        <img height="100px" src="{{ url }}" alt="">
-                        <p class="text-muted small mb-4 mb-lg-0">Hola {{ user.username }}!!</p>
-                        <li><a class="btn btn-primary" href="{% url 'logout' %}">Cerrar Sesion</a>
-                        <li><a class="btn btn-primary" href="{% url 'editarPerfil' %}">Editar perfil</a>
-                        {% else %}
-                        <li><a class="btn btn-primary" href="{% url 'login' %}">Iniciar sesion</a></li>
-                        <li><a class="btn btn-primary" href="{% url 'register' %}">Registrarse</a></li>
-                        {% endif %}
-                    </ul>
-                </div>
-                {% endblock %}
-            </div>
+    {% block encabezado_que_cambia %}
+    <header class="header">
+        <nav class="nav">
+            {% if user.is_authenticated %}
+                <img height="75px" src="{{ avatar }}" class= "img nav-link" alt="" >
+                <nav class="navbar navbar-light bg-light static-top">
+                    <div class="container">
+                    <a class = "btn btn-sucess" href="{% url 'sobreMi' %}">SOBRE MI</a>
+                    <a class = "btn btn-sucess" href="{% url 'post' %}">PUBLICAR</a>
+                    <a class = "btn btn-sucess" href="{% url 'leerPosts' %}">PUBLICACIONES</a>
+                    <a class = "btn btn-sucess" href="{% url 'editarPerfil' %}">EDITAR PERFIL</a>
+                    <a class = "btn btn-sucess" href="{% url 'logout' %}">CERRAR SESION</a>
+            {% else %}
+                    <a class = "btn btn-sucess" href="{% url 'login' %}">INICIAR SESION</a>
+                    <a class = "btn btn-sucess" href="{% url 'register' %}">REGISTRARSE</a>
+            {% endif %}
+                    </div>
+                </nav>
         </nav>
-        <!-- Page Header-->
-        {% block encabezado_que_cambia %}
-        <header class="masthead" style="background-image: url('assets/img/home-bg.jpg')">
+    </header>
+        <header class="masthead">
             <div class="container position-relative px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
-                        <div class="site-heading">
+                        <div class="site-heading" style="background-color:pink ;">
                             <h1>Patitas a la obra</h1>
                             <span class="subheading">Un blog dedicado a nuestros mejores amigos</span>
                         </div>
                     </div>
                 </div>
             </div>
+            <h2>{{ mensaje }}</h2>
         </header>
-        {% endblock %}
-        <!-- Main Content-->
-        {% block contenido_que_cambia %}
+    {% endblock %}
+    {% block contenido_que_cambia %}
+    {% endblock %}
+        <!-- Main Content
+    
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
-                    <!-- Post preview-->
-                    <div class="post-preview">
+                   Post preview-->
+                    <!-- <div class="post-preview">
                         <a href="post.html">
                             <h2 class="post-title">Man must explore, and this is exploration at its greatest</h2>
                             <h3 class="post-subtitle">Problems look mighty small from 150 miles up</h3>
@@ -77,9 +71,9 @@
                             on September 24, 2022
                         </p>
                     </div>
-                    <!-- Divider-->
+                     Divide
                     <hr class="my-4" />
-                    <!-- Post preview-->
+                    Post preview
                     <div class="post-preview">
                         <a href="post.html"><h2 class="post-title">I believe every human has a finite number of heartbeats. I don't intend to waste any of mine.</h2></a>
                         <p class="post-meta">
@@ -88,9 +82,9 @@
                             on September 18, 2022
                         </p>
                     </div>
-                    <!-- Divider-->
+                     Divider
                     <hr class="my-4" />
-                    <!-- Post preview-->
+                    Post preview
                     <div class="post-preview">
                         <a href="post.html">
                             <h2 class="post-title">Science has not yet mastered prophecy</h2>
@@ -102,9 +96,9 @@
                             on August 24, 2022
                         </p>
                     </div>
-                    <!-- Divider-->
+                     Divider
                     <hr class="my-4" />
-                    <!-- Post preview-->
+                    Post preview
                     <div class="post-preview">
                         <a href="post.html">
                             <h2 class="post-title">Failure is not an option</h2>
@@ -116,14 +110,14 @@
                             on July 8, 2022
                         </p>
                     </div>
-                    <!-- Divider-->
+                     Divider
                     <hr class="my-4" />
-                    <!-- Pager-->
+                     Pager
                     <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a></div>
                 </div>
             </div>
-        </div>
-        {% endblock %}
+        </div> -->
+  
         <!-- Footer-->
         <footer class="border-top">
             <div class="container px-4 px-lg-5">

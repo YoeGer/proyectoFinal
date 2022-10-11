@@ -7,7 +7,7 @@ class Post(models.Model):
     titulo = models.CharField(max_length = 250)
     contenido = RichTextUploadingField(blank=True, null=True)
     imagen = models.ImageField('imagen', upload_to = 'post/', null = True, blank = True )
-    autor = models.ForeignKey(User, on_delete = models.CASCADE)
+    autor = models.ForeignKey(User, on_delete = models.CASCADE, default=User.first_name)
     fecha = models.DateTimeField(default=timezone.now)
 
     class Meta:

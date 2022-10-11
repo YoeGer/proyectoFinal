@@ -7,11 +7,10 @@ from .models import *
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-class PostForm(ModelForm): 
+class PostForm(ModelForm):
     class Meta:
         model = Post
         fields = '__all__'
-
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()

@@ -10,7 +10,7 @@ from blog.forms import UserEditForm
 def inicio(request):
     posts = Post.objects.all()
     avatares = Avatar.objects.filter(user=request.user.id)  
-    return render(request, 'blog/inicio.html', {'posts': posts, 'url': avatares[0].imagen.url})
+    return render(request, 'blog/inicio.html', {'posts': posts, 'avatar':obtenerAvatar(request)})
 
 @login_required
 def postFormulario(request):
@@ -25,7 +25,7 @@ def postFormulario(request):
             fecha = informacion["fecha"]
             post = Post(titulo=informacion["titulo"], contenido=informacion["contenido"], imagen=informacion["imagen"], autor=informacion["autor"], fecha=informacion["fecha"])
             post.save() 
-            return render(request, 'blog/inicio.html', {'mensaje': 'Articulo creado correctamente'})
+            return render(request, 'blog/inicio.html', {'mensaje': 'Articulo creado correctamente','avatar':obtenerAvatar(request)})
     else: 
         form = PostForm() 
     return render(request, 'blog/postForm.html', {'formulario':form})
@@ -33,14 +33,14 @@ def postFormulario(request):
 @login_required
 def leerPosts(request): 
     posts = Post.objects.all()
-    return render(request, "blog/leerPosts.html", {'posts': posts})
+    return render(request, "blog/leerPosts.html", {'posts': posts,'avatar':obtenerAvatar(request)})
 
 @login_required
 def eliminarPost(request, id):
     post = Post.objects.get(id=id)
     post.delete()
     posts = Post.objects.all()
-    return render (request, "blog/leerPosts.html", {"posts":posts})
+    return render (request, "blog/leerPosts.html", {"posts":posts,'avatar':obtenerAvatar(request)})
 
 @login_required
 def editarPost(request, id):
@@ -56,15 +56,15 @@ def editarPost(request, id):
             fecha = informacion["fecha"]
             post.save()
             posts = Post.objects.all()
-            return render (request, "blog/leerPosts.html", {'posts':posts})
+            return render (request, "blog/leerPosts.html", {'posts':posts, 'avatar':obtenerAvatar(request)})
     else: 
         form = PostForm(initial={"titulo":post.titulo, "contenido":post.contenido, "imagen":post.imagen, "autor":post.autor, "fecha":post.fecha})
-        return render (request, "blog/editarPost.html", {"formulario":form, "post":post})
+        return render (request, "blog/editarPost.html", {"formulario":form, "post":post, 'avatar':obtenerAvatar(request)})
 
 @login_required
 def postDetalle(request, id):
     post = Post.objects.get(id=id)
-    return render (request, "blog/postDetalle.html", {'post':post})
+    return render (request, "blog/postDetalle.html", {'post':post, 'avatar':obtenerAvatar(request)})
 
 def login_request(request):
     if request.method == 'POST':
@@ -75,7 +75,7 @@ def login_request(request):
             usuario = authenticate(username=usu,password=clave)
             if usuario is not None:
                 login(request,usuario)
-                return render(request, "blog/inicio.html", {'mensaje':f'Bienvenido {usuario}'})
+                return render(request, "blog/login.html", {'mensaje':f'Bienvenido {usuario}','avatar':obtenerAvatar(request)})
             else: 
                 return render(request, "blog/login.html", {'formulario': form, 'mensaje':'Usuario o clave incorrecto'})
         else: 
@@ -90,7 +90,7 @@ def register(request):
         if form.is_valid(): 
             username = form.cleaned_data.get('username')
             form.save()
-            return render(request, "blog/inicio.html", {'mensaje': f"Usuario {username} creado correctamente"})
+            return render(request, "blog/inicio.html", {'mensaje': f"Usuario {username} creado correctamente. Inicie sesion."})
         else: 
             return render(request, "blog/register.html", {'formulario': form, 'mensaje': "FORMULARIO INVALIDO"})
     else: 
@@ -110,9 +110,9 @@ def editarPerfil(request):
             usuario.first_name = info ["first_name"]
             usuario.last_name = info ["last_name"]
             usuario.save()
-            return render (request, "blog/editarPerfil.html", {'mensaje':'Perfil editado correctamente'})
+            return render (request, "blog/editarPerfil.html", {'mensaje':'Perfil editado correctamente','avatar':obtenerAvatar(request)})
         else: 
-            return render (request, "blog/editarPerfil.html", {'formulario': form, 'usuario':usuario, 'mensaje':'FORMULARIO INVALIDO'})
+            return render (request, "blog/editarPerfil.html", {'formulario': form, 'usuario':usuario, 'mensaje':'FORMULARIO INVALIDO','avatar':obtenerAvatar(request)})
     else: 
         form = UserEditForm(instance=usuario)
     return render (request, "blog/editarPerfil.html", {'formulario':form, 'usuario':usuario})
@@ -134,10 +134,14 @@ def agregarAvatar(request):
         formulario = AvatarForm()
         return render (request, "blog/agregarAvatar.html", {'formulario':formulario, 'usuario': request.user})
 
-    def obtenerAvatar(request): 
-        lista = Avatar.objects.filter(user=request.user)
-        if len(lista)!=0:
-            imagen = lista[0].imagen.url
-        else: 
-            imagen = "avatarPorDefecto"
-        return imagen
+def obtenerAvatar(request): 
+    lista = Avatar.objects.filter(user=request.user)
+    if len(lista)!=0:
+        imagen = lista[0].imagen.url
+    else: 
+        imagen = "/media/avatares/avatarPorDefecto/avatarPorDefecto.png"
+    return imagen
+
+@login_required
+def sobreMi(request): 
+    return render(request, "blog/sobreMi.html", {'avatar':obtenerAvatar(request)})

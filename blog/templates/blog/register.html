@@ -1,9 +1,41 @@
 {% extends 'blog/base.html' %}
 
 {% load static %}
-
+{% block encabezado_que_cambia %}
+<header class="header">
+    <nav class="nav">
+        {% if user.is_authenticated %}
+            <img height="75px" src="{{ avatar }}" class= "img nav-link" alt="" >
+            <nav class="navbar navbar-light bg-light static-top">
+                <div class="container">
+                <a class = "btn btn-sucess" href="{% url 'sobreMi' %}">SOBRE MI</a>
+                <a class = "btn btn-sucess" href="{% url 'post' %}">PUBLICAR</a>
+                <a class = "btn btn-sucess" href="{% url 'leerPosts' %}">PUBLICACIONES</a>
+                <a class = "btn btn-sucess" href="{% url 'editarPerfil' %}">EDITAR PERFIL</a>
+                <a class = "btn btn-sucess" href="{% url 'logout' %}">CERRAR SESION</a>
+        {% else %}
+                <a class = "btn btn-sucess" href="{% url 'login' %}">INICIAR SESION</a>
+                <a class = "btn btn-sucess" href="{% url 'register' %}">REGISTRARSE</a>
+        {% endif %}
+                </div>
+            </nav>
+    </nav>
+</header>
+    <header class="masthead">
+        <div class="container position-relative px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="site-heading">
+                        <h1>REGISTRARSE</h1>
+                        <a class = "btn btn-sucess" href="{% url 'inicio' %}">Ir a inicio</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock %}
 {% block contenido_que_cambia %}
-<h1>REGISTRARSE</h1>
+
 <form action="{% url 'register' %}" method="POST"> {% csrf_token %}
     <table>
         {{ formulario.as_table }}
@@ -11,5 +43,6 @@
     </table>
     <button type="submit">Registrarse</button>
 </form>
-<h2>{{ mensaje }}</h2>
+
+
 {% endblock %}
